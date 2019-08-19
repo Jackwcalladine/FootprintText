@@ -8,7 +8,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
 import re
 
-
+#here is where the keyword is stored
 page = requests.get("https://www.google.dz/search?q=kids parties")
 soup = BeautifulSoup(page.content)
 
@@ -17,6 +17,7 @@ text_list = []
 for link in  soup.find_all("a",href=re.compile("(?<=/url\?q=)(htt.*://.*)")):
     text_list.append(re.split(":(?=http)",link["href"].replace("/url?q=","")))
 
+#gets the pages URL without the extra nonsense at the end    
 def trunc_at(s, d, n=3):
     "Returns s truncated at the n'th (3rd by default) occurrence of the delimiter, d."
     return d.join(s.split(d, n)[:n])
@@ -31,6 +32,7 @@ for item in fixed_list:
 
 usable_list = list(OrderedDict.fromkeys(truncated))
 
+#presents html in a list with spaces, tags and other HTML elements removed
 final_list = []
 for item in usable_list:
     try:
